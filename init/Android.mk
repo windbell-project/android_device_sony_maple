@@ -5,31 +5,29 @@
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#      http://www.apache.org/licenses/LICENSE-2.0
+# http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
 
-# Inherit from yoshino
-include device/sony/yoshino/BoardConfigCommon.mk
+LOCAL_PATH := $(call my-dir)
 
-DEVICE_PATH := device/sony/maple
+include $(CLEAR_VARS)
 
-# Kernel
-TARGET_KERNEL_CONFIG := lineage_maple_defconfig
+LOCAL_C_INCLUDES := \
+    system/core/base/include \
+    system/core/init \
+    external/selinux/libselinux/include \
+    external/libcap/libcap/include
 
-# Bluetooth
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_PATH)/bluetooth
+LOCAL_STATIC_LIBRARIES := libbase
 
-# Init
-TARGET_PLATFORM_DEVICE_BASE := /devices/soc/
+LOCAL_SRC_FILES := init_maple.cpp
 
-TARGET_INIT_VENDOR_LIB := libinit_maple
-TARGET_RECOVERY_DEVICE_MODULES := libinit_maple
+LOCAL_MODULE := libinit_maple
+LOCAL_MODULE_TAGS := optional
 
-# inherit from the proprietary version
-include vendor/sony/maple/BoardConfigVendor.mk
+include $(BUILD_STATIC_LIBRARY)
